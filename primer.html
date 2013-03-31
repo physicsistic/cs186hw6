@@ -27,7 +27,7 @@
 	obj = { x : 1, 	y : 2};
 	document.write("Parameters of object = ("+obj.x+","+obj.y+") <br>");
 	// Function as parameter
-	obj.add = function(x, y) { return x+y }					// ** TO-DO: This will need to be changed
+	obj.add = add;				// ** TO-DO: This will need to be changed
 	document.write("obj.add(1,2) = "+obj.add(1,2)+" <br>");
 	
 	//Print all object properties
@@ -44,7 +44,10 @@
 		return output;
 	}
 
-	document.write("<br>function(x) { return x } is n! Here is 5! with this: ")
+	document.write("<br><br>Algebra.operation = "+Algebra.operation)
+	document.write("<br>Algebra.mul(2,6) = "+Algebra.mul(2,6)+" <br>");
+	document.write("<br>function(x) { return x } in genprod is n!")
+	document.write("<br>Algebra.genprod(5,function(x) { return x }) = ")
 	document.write(Algebra.genprod(5,function(x) { return x }))
 
 
