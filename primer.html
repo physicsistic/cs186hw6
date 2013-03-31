@@ -34,8 +34,20 @@
 	for(i in obj) 
 		document.write("<br>Property "+i+" = "+obj[i]);
 		
-	var Algebra = { };										// ** TO-DO: Define an Algebra object
-	
+	var Algebra = new Object();				// ** TO-DO: Define an Algebra object
+	Algebra.operation = "multiplication";
+	Algebra.mul = function(x,y) { return x * y }
+	Algebra.genprod = function(n,f) {
+		output = 1
+		for(i=0; i<n; i++)
+		 	output *= f(i+1);
+		return output;
+	}
+
+	document.write("<br>function(x) { return x } is n! Here is 5! with this: ")
+	document.write(Algebra.genprod(5,function(x) { return x }))
+
+
 </script>
 
 </html>
