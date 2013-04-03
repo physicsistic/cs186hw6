@@ -9,7 +9,12 @@ var page = createWebpageFromTemplate(
 </div>);
 
 // TO-DO define the HIT parameters.
-var hitParams = <YOUR CODE>
+var hitParams = {
+	title: "Pick a Number",
+	desc: "Pick a number from 1 to 10.",
+	url: page,
+	reward: .02
+}
 
 // Create the HIT
 var hit = mturk.createHIT(hitParams)
