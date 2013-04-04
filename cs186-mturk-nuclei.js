@@ -1,7 +1,7 @@
 // Problem 3.  Count # nuclei in an image. 
 
 // TO-DO: Define the payments.	
-    var nucleiHITcost = <YOUR CODE>
+    var nucleiHITcost = 0.05
     
     var hitId = createNucleiHIT(nucleiHITcost)
 	print("New hit was created.");
@@ -17,7 +17,7 @@
     print("-------------------")
     
 // TO-DO:  Payment for voting.
-    var votingCost = <YOUR CODE>
+    var votingCost = 0.01
     if (vote(ansCount, votingCost)) {
         mturk.approveAssignment(hit.assignments[0])
         print("\nConsensus reached!\n")
@@ -55,7 +55,12 @@ function createNucleiHIT(argCost) {
     </QuestionForm>
     
     // TO-DO create the HIT (use the question form above)
-    return mturk.createHIT(<YOUR CODE>)
+    return mturk.createHIT({
+        title: "Nuclei Counting",
+        desc: "Count the number of nuclei in the image",
+        url: q,
+        reward: argCost
+    })
 }
 
 
@@ -99,7 +104,12 @@ function vote(argNucleiCount, argVoteCost) {
     })
    
 // TO-DO:   Create the voting HIT 
-   var voteHitId = mturk.createHIT(<YOUR CODE>)
+    var voteHitId = mturk.createHIT({
+        title: "Vote for Nuclei Count",
+        desc: "Vote on whether the count is accurate in this particular response",
+        url: q,
+        reward: argVoteCost
+    })
     
    var voteResults = mturk.vote(voteHitId, function (answer) {
 			 return (answer.bestOption) })
