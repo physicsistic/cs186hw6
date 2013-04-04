@@ -13,6 +13,7 @@ var hitParams = {
 	title: "Pick a Number",
 	desc: "Pick a number from 1 to 10.",
 	url: page,
+	maxAssignments : 5,
 	reward: .02
 }
 
