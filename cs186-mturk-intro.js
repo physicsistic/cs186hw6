@@ -8,8 +8,7 @@ print("No. of hits: "+ mturk.getHITs().length)
 // Explore the HIT object. 
 // Get the first HIT and then iterate over its properties.
 if(mturk.getHITs().length>0) {
-	var hitObj = <YOUR CODE> 
+	var hitObj = mturk.getHITs()[0]
 	for(attr in hitObj) 
 		print("Attr ="+attr+ " val="+hitObj[attr])
 }
-

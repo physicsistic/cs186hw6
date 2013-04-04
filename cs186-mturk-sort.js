@@ -3,7 +3,7 @@
 var pictures = ["WPLAo.jpg","Sbkem.jpg","SzBIk.jpg","ZiusC.jpg", "r53qG.jpg","RNfpa.jpg","XcGBz.jpg","YdL3d.jpg"]
 
 // TO-DO: Add "http://i.imgur.com/"    at the beginning of every picture id
-pictures = pictures.map(<YOUR CODE>)
+pictures = pictures.map(function(x) {"http://i.imgur.com/"+x})
 
 //  Creates a webpage of two images side-by-side
 function getPicsPage(pic1, pic2) {
