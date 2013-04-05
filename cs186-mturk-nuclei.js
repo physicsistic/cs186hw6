@@ -17,7 +17,7 @@
     print("-------------------")
     
 // TO-DO:  Payment for voting.
-    var votingCost = 0.05
+    var votingCost = 0.02
     if (vote(ansCount, votingCost)) {
         mturk.approveAssignment(hit.assignments[0])
         print("\nConsensus reached!\n")
@@ -110,6 +110,7 @@ function vote(argNucleiCount, argVoteCost) {
         title: "Vote for Nuclei Count",
         desc: "Vote on whether the count is accurate in this particular response",
         question : "" + q,
+        maxAssignments : 9,
         reward: argVoteCost
     }
     var voteHitId = mturk.createHIT(voteHitParams)

@@ -5,9 +5,11 @@ var pictures = ["WPLAo.jpg","Sbkem.jpg","SzBIk.jpg","ZiusC.jpg", "r53qG.jpg","RN
 // TO-DO: Add "http://i.imgur.com/"    at the beginning of every picture id
 pictures = pictures.map(function(x) {return "http://i.imgur.com/"+x})
 
+setTrace(2)
+
 //  Creates a webpage of two images side-by-side
 function getPicsPage(pic1, pic2) {
-/*    default xml namespace = "http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionForm.xsd";
+    default xml namespace = "http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionForm.xsd";
     var q = <QuestionForm>
         <Question>
             <QuestionIdentifier>vote</QuestionIdentifier>
@@ -24,25 +26,27 @@ function getPicsPage(pic1, pic2) {
         </Question>
     </QuestionForm>
 
-    var options = [{key:"a",value:pic1}, {key:"b",value:pic2}]
+    var options = [{key:"1",value:pic1}, {key:"2",value:pic2}]
     shuffle(options)
     foreach(options, function (op) {
         default xml namespace = "http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionForm.xsd";
         q.Question.AnswerSpecification.SelectionAnswer.Selections.Selection +=
             <Selection>
                 <SelectionIdentifier>{op.key}</SelectionIdentifier>
-                <img src={op.value} width="45%"></img>
+                <FormattedContent><![CDATA[
+                <img src={op.value} width="45%" alt={op.key}></img>
+                ]]></FormattedContent>
             </Selection>
     })
-    return "" + q;*/
+    return "" + q
 
-    var text=  "Which picture comes before the other chronologically? (Type 'Left' or 'Right')"
+/*    var text=  "Which picture comes before the other chronologically? (Type 'Left' or 'Right')"
 
     // TO-DO:   Expand on our HTML design. Do you think a different design could better?
     // Provide evidence.
     var webpage = createWebpageFromTemplate(<div>
             <img src={pic1} width="45%" alt="Image 1"></img>
-    	   <img src={pic2}  width="45%" alt="Image 2"></img>
+    	    <img src={pic2}  width="45%" alt="Image 2"></img>
             <ul>
                 <li>People will vote whether to approve your work.</li>
             </ul>
@@ -50,25 +54,27 @@ function getPicsPage(pic1, pic2) {
             <input type="submit" value="Submit"></input>
         </div>);
 
-	return webpage;
+	return webpage;*/
 }
 
 // TO-DO : Create a comparison HIT
 var a = mturk.sort(pictures, function (a, b) {
-    var h = {title : "Sort Two Pictures", 
+    var h = {
+        title : "Sort Two Pictures", 
         desc : "Decide which photo was taken earlier", 
-        url: ""+getPicsPage(a, b), 
-        height : 480, 
-        reward : 0.1,
-        maxAssignments : 2}
+        question: getPicsPage(a, b), 
+        reward : 0.01,
+        maxAssignments : 2
+    }
 
     var hit = mturk.createHIT(h)
-    if (mturk.vote(hit, function (a) {return a.vote[0]}).bestOption == "a") {
+    if (mturk.vote(hit, function (a) {return a.vote[0]}).bestOption == "1") {
         return -1
     } else {
         return 1
     }
 })
+
 print("sorted = " + json(a))
 
 
