@@ -49,7 +49,6 @@ var text=  "Which picture comes before the other chronologically? (Type 'Left' o
     </QuestionForm>
 
     var options = [{key:"1",value:"left"}, {key:"2",value:"right"}]
-    shuffle(options)
     foreach(options, function (op) {
         default xml namespace = "http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionForm.xsd";
         q.Question.AnswerSpecification.SelectionAnswer.Selections.Selection +=
@@ -62,28 +61,23 @@ var text=  "Which picture comes before the other chronologically? (Type 'Left' o
     return "" + q
 }
 
-<<<<<<< HEAD
 // Problem 4. Sort images
 
-=======
->>>>>>> 178c5c30d24f63511f3d52011de883443a4c9567
+
 var pictures2 = ["WPLAo.jpg","Sbkem.jpg","SzBIk.jpg"]
 
 // TO-DO: Add "http://i.imgur.com/"    at the beginning of every picture id
 pictures2 = pictures2.map(function(x) {return "http://i.imgur.com/"+x})
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 178c5c30d24f63511f3d52011de883443a4c9567
 // TO-DO : Create a comparison HIT
-var a = mturk.sort(pictures2, function (a, b) {
+var a = mturk.sort(pictures, function (a, b) {
     var h = {
         title : "Sort Two Pictures", 
         desc : "Decide which photo was taken earlier", 
         question: getPicsPage(a, b).replace("http://left",a).replace("http://right",b), 
         reward : 0.01,
-        maxAssignments : 2
+        maxAssignments : 1
     };
 
 
