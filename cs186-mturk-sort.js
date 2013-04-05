@@ -62,8 +62,14 @@ var text=  "Which picture comes before the other chronologically? (Type 'Left' o
     return "" + q
 }
 
+var pictures2 = ["WPLAo.jpg","Sbkem.jpg","SzBIk.jpg"]
+
+// TO-DO: Add "http://i.imgur.com/"    at the beginning of every picture id
+pictures2 = pictures2.map(function(x) {return "http://i.imgur.com/"+x})
+
+
 // TO-DO : Create a comparison HIT
-var a = mturk.sort(pictures, function (a, b) {
+var a = mturk.sort(pictures2, function (a, b) {
     var h = {
         title : "Sort Two Pictures", 
         desc : "Decide which photo was taken earlier", 
