@@ -71,7 +71,7 @@ pictures2 = pictures2.map(function(x) {return "http://i.imgur.com/"+x})
 
 
 // TO-DO : Create a comparison HIT
-var a = mturk.sort(pictures, function (a, b) {
+var a = mturk.sort(pictures2, function (a, b) {
     var h = {
         title : "Sort Two Pictures", 
         desc : "Decide which photo was taken earlier", 
@@ -82,7 +82,7 @@ var a = mturk.sort(pictures, function (a, b) {
 
 
     var hit = mturk.createHIT(h)
-    if (mturk.vote(hit, function (a) {return a.bestOption}).bestOption == "left") {
+    if (mturk.vote(hit, function (a) {return a.vote[0]}).bestOption == "left") {
         return 1
     } else {
         return -1
