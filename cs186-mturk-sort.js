@@ -35,7 +35,8 @@ var text=  "Which picture comes before the other chronologically? (Type 'Left' o
             <QuestionContent>
                 <Text>Which picture comes before the other chronologically?</Text>
 <FormattedContent><![CDATA[
-<img src="http://i.imgur.com/WPLAo.jpg" alt="Nuclei"></img>
+<img src="http://left" alt="left image" width="45%" />
+<img src="http://right" alt="right image" width="45%" />
 ]]></FormattedContent>
             </QuestionContent>
             <AnswerSpecification>
@@ -47,7 +48,7 @@ var text=  "Which picture comes before the other chronologically? (Type 'Left' o
         </Question>
     </QuestionForm>
 
-    var options = [{key:"1",value:pic1}, {key:"2",value:pic2}]
+    var options = [{key:"1",value:"left"}, {key:"2",value:"right"}]
     shuffle(options)
     foreach(options, function (op) {
         default xml namespace = "http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionForm.xsd";
@@ -66,7 +67,7 @@ var a = mturk.sort(pictures, function (a, b) {
     var h = {
         title : "Sort Two Pictures", 
         desc : "Decide which photo was taken earlier", 
-        question: getPicsPage(a, b), 
+        question: getPicsPage(a, b).replace("http://left",a).replace("http://right",b), 
         reward : 0.01,
         maxAssignments : 2
     };
