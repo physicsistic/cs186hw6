@@ -15,7 +15,7 @@ var text=  "Which picture comes before the other chronologically? (Type 'Left' o
 
 // TO-DO:   Expand on our HTML design. Do you think a different design could better?
 // Provide evidence.
-var webpage = createWebpageFromTemplate(<div>
+/*var webpage = createWebpageFromTemplate(<div>
         <img src={pic1} width="45%" alt="Image 1"></img>
        <img src={pic2}  width="45%" alt="Image 2"></img>
         <ul>
@@ -26,14 +26,17 @@ var webpage = createWebpageFromTemplate(<div>
         <input type="submit" value="Submit"></input>
     </div>);
 
-    return webpage;
+    return webpage;*/
 
-/*    var q = <QuestionForm>
+    var q = <QuestionForm>
         <Question>
             <QuestionIdentifier>vote</QuestionIdentifier>
             <IsRequired>true</IsRequired>
             <QuestionContent>
                 <Text>Which picture comes before the other chronologically?</Text>
+<FormattedContent><![CDATA[
+<img src="http://i.imgur.com/WPLAo.jpg" alt="Nuclei"></img>
+]]></FormattedContent>
             </QuestionContent>
             <AnswerSpecification>
                 <SelectionAnswer>
@@ -51,13 +54,11 @@ var webpage = createWebpageFromTemplate(<div>
         q.Question.AnswerSpecification.SelectionAnswer.Selections.Selection +=
             <Selection>
                 <SelectionIdentifier>{op.key}</SelectionIdentifier>
-                <Text>"{op.value}"</Text>
-                <FormattedContent><![CDATA[
-                        <img src={op.value} width="45%" alt="image"></img>
-                ]]></FormattedContent>
+                <Text>{op.value}</Text>
+                
             </Selection>
     })
-    return "" + q*/
+    return "" + q
 }
 
 // TO-DO : Create a comparison HIT
@@ -65,13 +66,13 @@ var a = mturk.sort(pictures, function (a, b) {
     var h = {
         title : "Sort Two Pictures", 
         desc : "Decide which photo was taken earlier", 
-        url: ""+getPicsPage(a, b), 
+        question: getPicsPage(a, b), 
         reward : 0.01,
         maxAssignments : 2
-    }
+    };
 
-    var hit = mturk.createHIT(h)
-    if (mturk.vote(hit, function (a) {return a.bestOption}).bestOption == "left") {
+    var hit = mturk.createHIT(h);
+    if (mturk.vote(hit, function (a) {return a.bestOption}).bestOption == "1") {
         return -1
     } else {
         return 1
