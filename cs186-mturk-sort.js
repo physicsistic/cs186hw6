@@ -10,7 +10,25 @@ setTrace(2)
 //  Creates a webpage of two images side-by-side
 function getPicsPage(pic1, pic2) {
     default xml namespace = "http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionForm.xsd";
-    var q = <QuestionForm>
+
+var text=  "Which picture comes before the other chronologically? (Type 'Left' or 'Right')"
+
+// TO-DO:   Expand on our HTML design. Do you think a different design could better?
+// Provide evidence.
+var webpage = createWebpageFromTemplate(<div>
+        <img src={pic1} width="45%" alt="Image 1"></img>
+       <img src={pic2}  width="45%" alt="Image 2"></img>
+        <ul>
+            <li>People will vote whether to approve your work.</li>
+        </ul>
+        <input type="radio" name="new" value="left">Left</input>
+        <input type="radio" name="new" value="right">Right</input>
+        <input type="submit" value="Submit"></input>
+    </div>);
+
+    return webpage;
+
+/*    var q = <QuestionForm>
         <Question>
             <QuestionIdentifier>vote</QuestionIdentifier>
             <IsRequired>true</IsRequired>
@@ -33,28 +51,13 @@ function getPicsPage(pic1, pic2) {
         q.Question.AnswerSpecification.SelectionAnswer.Selections.Selection +=
             <Selection>
                 <SelectionIdentifier>{op.key}</SelectionIdentifier>
+                <Text>"{op.value}"</Text>
                 <FormattedContent><![CDATA[
-                <img src={op.value} width="45%" alt={op.key}></img>
+                        <img src={op.value} width="45%" alt="image"></img>
                 ]]></FormattedContent>
             </Selection>
     })
-    return "" + q
-
-/*    var text=  "Which picture comes before the other chronologically? (Type 'Left' or 'Right')"
-
-    // TO-DO:   Expand on our HTML design. Do you think a different design could better?
-    // Provide evidence.
-    var webpage = createWebpageFromTemplate(<div>
-            <img src={pic1} width="45%" alt="Image 1"></img>
-    	    <img src={pic2}  width="45%" alt="Image 2"></img>
-            <ul>
-                <li>People will vote whether to approve your work.</li>
-            </ul>
-            <textarea style="width:500px;height:50px" name="newText">{text}</textarea>
-            <input type="submit" value="Submit"></input>
-        </div>);
-
-	return webpage;*/
+    return "" + q*/
 }
 
 // TO-DO : Create a comparison HIT
@@ -62,13 +65,13 @@ var a = mturk.sort(pictures, function (a, b) {
     var h = {
         title : "Sort Two Pictures", 
         desc : "Decide which photo was taken earlier", 
-        question: getPicsPage(a, b), 
+        url: ""+getPicsPage(a, b), 
         reward : 0.01,
         maxAssignments : 2
     }
 
     var hit = mturk.createHIT(h)
-    if (mturk.vote(hit, function (a) {return a.vote[0]}).bestOption == "1") {
+    if (mturk.vote(hit, function (a) {return a.bestOption}).bestOption == "left") {
         return -1
     } else {
         return 1
