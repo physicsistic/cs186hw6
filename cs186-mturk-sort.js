@@ -5,13 +5,9 @@ var pictures = ["WPLAo.jpg","Sbkem.jpg","SzBIk.jpg","ZiusC.jpg", "r53qG.jpg","RN
 // TO-DO: Add "http://i.imgur.com/"    at the beginning of every picture id
 pictures = pictures.map(function(x) {return "http://i.imgur.com/"+x})
 
-setTrace(2)
-
 //  Creates a webpage of two images side-by-side
 function getPicsPage(pic1, pic2) {
     default xml namespace = "http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionForm.xsd";
-
-var text=  "Which picture comes before the other chronologically? (Type 'Left' or 'Right')"
 
 // TO-DO:   Expand on our HTML design. Do you think a different design could better?
 // Provide evidence.
@@ -33,11 +29,11 @@ var text=  "Which picture comes before the other chronologically? (Type 'Left' o
             <QuestionIdentifier>vote</QuestionIdentifier>
             <IsRequired>true</IsRequired>
             <QuestionContent>
-                <Text>Which picture comes before the other chronologically?</Text>
-<FormattedContent><![CDATA[
-<img src="http://left" alt="left image" width="45%" />
-<img src="http://right" alt="right image" width="45%" />
-]]></FormattedContent>
+                <Text>Which picture (left or right) comes before the other chronologically?</Text>
+                <FormattedContent><![CDATA[
+                <img src="http://left" alt="left image" width="45%" />
+                <img src="http://right" alt="right image" width="45%" />
+                ]]></FormattedContent>
             </QuestionContent>
             <AnswerSpecification>
                 <SelectionAnswer>
@@ -48,44 +44,34 @@ var text=  "Which picture comes before the other chronologically? (Type 'Left' o
         </Question>
     </QuestionForm>
 
-    var options = [{key:"1",value:"left"}, {key:"2",value:"right"}]
+    var options = [{key:"l",value:"left"}, {key:"r",value:"right"}]
     foreach(options, function (op) {
         default xml namespace = "http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionForm.xsd";
         q.Question.AnswerSpecification.SelectionAnswer.Selections.Selection +=
             <Selection>
                 <SelectionIdentifier>{op.key}</SelectionIdentifier>
                 <Text>{op.value}</Text>
-                
             </Selection>
     })
     return "" + q
 }
 
-// Problem 4. Sort images
-
-
-var pictures2 = ["WPLAo.jpg","Sbkem.jpg","SzBIk.jpg"]
-
-// TO-DO: Add "http://i.imgur.com/"    at the beginning of every picture id
-pictures2 = pictures2.map(function(x) {return "http://i.imgur.com/"+x})
-
 
 // TO-DO : Create a comparison HIT
-var a = mturk.sort(pictures2, function (a, b) {
+var a = mturk.sort(pictures, function (a, b) {
     var h = {
         title : "Sort Two Pictures", 
         desc : "Decide which photo was taken earlier", 
         question: getPicsPage(a, b).replace("http://left",a).replace("http://right",b), 
-        reward : 0.01,
-        maxAssignments : 1
+        reward : 0.02,
+        maxAssignments : 3
     };
 
-
     var hit = mturk.createHIT(h)
-    if (mturk.vote(hit, function (a) {return a.vote[0]}).bestOption == "left") {
-        return 1
-    } else {
+    if (mturk.vote(hit, function (a) {return a.vote[0]}).bestOption == "l") {
         return -1
+    } else {
+        return 1
     }
 })
 
